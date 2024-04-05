@@ -5,3 +5,6 @@ Tienes que usar 3 KEYS:
 -Crear un bot de Telegram
 -Virus total
 -google safe browsing
+
+
+Programa principal es: Bot.py
