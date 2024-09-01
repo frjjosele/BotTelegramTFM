@@ -8,10 +8,7 @@ from config import GOOGLE_API_KEY, VIRUSTOTAL_API_KEY
 GOOGLE_SAFE_BROWSING_URL = 'https://safebrowsing.googleapis.com/v4/threatMatches:find'
 
 async def verificar_url_con_google_safe_browsing(url):
-    """
-    Verifica la URL utilizando la API de Google Safe Browsing.
-    Imprime un mensaje informativo y retorna True si la URL es detectada como maliciosa.
-    """
+
     payload = {
         'client': {'clientId': "your_client_id", 'clientVersion': "1.0"},
         'threatInfo': {
@@ -36,10 +33,7 @@ async def verificar_url_con_google_safe_browsing(url):
         return False
 
 async def verificar_url_con_virustotal(url):
-    """
-    Verifica la URL utilizando la API de VirusTotal.
-    Imprime un mensaje informativo dependiendo del resultado de la verificación.
-    """
+
     async with vt.Client(VIRUSTOTAL_API_KEY) as client:
         url_id = vt.url_id(url)
         try:
@@ -59,14 +53,15 @@ async def verificar_url_con_virustotal(url):
             return False
 
 async def es_phishing(url):
-    """
-    Determina si una URL es phishing consultando ambas APIs.
-    Retorna True si alguna de las APIs identifica la URL como maliciosa.
-    """
+   
+    #Determina si una URL es phishing consultando ambas APIs.
+    
     es_maliciosa_google = await verificar_url_con_google_safe_browsing(url)
     es_maliciosa_virustotal = await verificar_url_con_virustotal(url)
+    
     return es_maliciosa_google or es_maliciosa_virustotal
 
+    
 async def contiene_phishing(mensaje):
     """
     Examina todas las URLs encontradas en el mensaje proporcionado.
